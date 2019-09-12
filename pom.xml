@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>aurelius</groupId>
   <artifactId>aurelius</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.0-alpha1-SNAPSHOT</version>
   <name>aurelius</name>
   <dependencies>
     <dependency>
