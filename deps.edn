@@ -1,15 +1,14 @@
 {:paths ["resources" "src"]
  :deps {org.clojure/clojure {:mvn/version "1.10.1"}
-        factual/geo {:mvn/version "3.0.0-rc-3"}
         ovid/ovid {:git/url "https://github.com/willcohen/ovid"
-                   :sha "f4fba011f6a9a979a7d6866b8474b5b6e50e0b3d"}}
+                   :sha "50af90f38b15736fd5655997562f08440ac390cb"}}
  :aliases
  {:test {:extra-paths ["test"]
-         :extra-deps {org.clojure/test.check {:mvn/version "0.10.0-RC1"}}}
+         :extra-deps {org.clojure/test.check {:mvn/version "0.10.0"}}}
   :runner
   {:extra-deps {com.cognitect/test-runner
                 {:git/url "https://github.com/cognitect-labs/test-runner"
-                 :sha "76568540e7f40268ad2b646110f237a60295fa3c"}}
+                 :sha "209b64504cb3bd3b99ecfec7937b358a879f55c1"}}
    :main-opts ["-m" "cognitect.test-runner"
                "-d" "test"]}
   :depstar

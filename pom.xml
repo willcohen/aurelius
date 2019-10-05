@@ -22,11 +22,6 @@
       <artifactId>clojure</artifactId>
       <version>1.10.1</version>
     </dependency>
-    <dependency>
-      <groupId>factual</groupId>
-      <artifactId>geo</artifactId>
-      <version>3.0.0-rc-3</version>
-    </dependency>
   </dependencies>
   <build>
     <sourceDirectory>resources</sourceDirectory>

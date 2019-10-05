@@ -1,5 +1,7 @@
 # aurelius
 
+[![Clojars Project](https://img.shields.io/clojars/v/aurelius.svg)](https://clojars.org/aurelius)
+
 Meditations on geospatial analysis
 
 This library seeks to enable transducible analysis of geospatial features.
