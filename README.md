@@ -1,6 +1,7 @@
 # aurelius
 
 [![Clojars Project](https://img.shields.io/clojars/v/aurelius.svg)](https://clojars.org/aurelius)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwillcohen%2Faurelius.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwillcohen%2Faurelius?ref=badge_shield)
 
 Meditations on geospatial analysis
 
@@ -32,3 +33,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwillcohen%2Faurelius.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwillcohen%2Faurelius?ref=badge_large)
