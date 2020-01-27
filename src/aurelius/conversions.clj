@@ -1,4 +1,4 @@
-;; Copyright (c) 2019 Will Cohen
+;; Copyright (c) 2019, 2020 Will Cohen
 ;;
 ;; Licensed under the Apache License, Version 2.0 (the "License");
 ;; you may not use this file except in compliance with the License.
@@ -12,7 +12,10 @@
 ;; See the License for the specific language governing permissions and
 ;; limitations under the License.
 
-(ns aurelius.conversions)
+(ns aurelius.conversions
+  (:require [clojure.tools.logging :as log]))
+
+(set! *warn-on-reflection* true)
 
 (defn sqft->acres
   [sqft]

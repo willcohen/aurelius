@@ -1,9 +1,30 @@
 {:paths ["resources" "src"]
- :deps {org.clojure/clojure {:mvn/version "1.10.1"}
+ :deps {ch.qos.logback/logback-classic {:mvn/version "1.2.3"}
+        clojure.java-time {:mvn/version "0.3.2"}
+        com.stuartsierra/component {:mvn/version "0.4.0"}
+        com.zaxxer/HikariCP {:mvn/version "3.4.2"}
+        hato {:mvn/version "0.4.1"}
+        honeysql {:mvn/version "0.9.8"}
+        nilenso/honeysql-postgres {:mvn/version "0.2.6"}
+        org.apache.poi/poi {:mvn/version "4.1.1"}
+        org.apache.poi/poi-ooxml {:mvn/version "4.1.1"}
+        org.clojure/clojure {:mvn/version "1.10.1"}
+        org.clojure/data.csv {:mvn/version "0.1.4"}
+        org.clojure/math.numeric-tower {:mvn/version "0.0.4"}
+        org.clojure/tools.logging {:mvn/version "0.5.0"}
+        org.postgresql/postgresql {:mvn/version "42.2.9"}
+        org.slf4j/jcl-over-slf4j {:mvn/version "1.7.30"}
+        org.slf4j/jul-to-slf4j {:mvn/version "1.7.30"}
+        org.slf4j/log4j-over-slf4j {:mvn/version "1.7.30"}
+        org.slf4j/slf4j-api {:mvn/version "1.7.30"}
+        org.threeten/threeten-extra {:mvn/version "1.5.0"}
+        org.xerial/sqlite-jdbc {:mvn/version "3.30.1"}
         ovid/ovid {:git/url "https://github.com/willcohen/ovid"
-                   :sha "50af90f38b15736fd5655997562f08440ac390cb"}}
+                   :sha "18a9e468ce35eb003da9694e06399ac357c98868"}
+        seancorfield/next.jdbc {:mvn/version "1.0.13"}}
  :aliases
- {:test {:extra-paths ["test"]
+ {:dev {:extra-paths ["dev"]}
+  :test {:extra-paths ["test"]
          :extra-deps {org.clojure/test.check {:mvn/version "0.10.0"}}}
   :runner
   {:extra-deps {com.cognitect/test-runner
