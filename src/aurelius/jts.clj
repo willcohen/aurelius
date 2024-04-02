@@ -1,4 +1,4 @@
-;; Copyright (c) 2019, 2020 Will Cohen
+;; Copyright (c) 2019, 2020, 2024 Will Cohen
 ;;
 ;; Licensed under the Apache License, Version 2.0 (the "License");
 ;; you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@
                                               -update-properties]]
             [geo.geohash :as geo.geohash])
   (:import (ch.hsr.geohash GeoHash WGS84Point)
-           (com.uber.h3core.util GeoCoord)
+           (com.uber.h3core.util LatLng)
            (org.locationtech.jts.algorithm MinimumDiameter)
            (org.locationtech.jts.geom Geometry)
            (org.locationtech.jts.geom.prep PreparedGeometry
@@ -390,7 +390,7 @@
     ([this] (-within? (feature/to-jts this)))
     ([this feat] (-within? (feature/to-jts this) feat)))
 
-  GeoCoord
+  LatLng
   (-prepare [this] (-prepare (feature/to-jts this)))
   (-unprepare [this] this)
   (-contains?
@@ -727,13 +727,13 @@
 
 ;; Internal wrapper functions for convenience
 
-(defn- wfg
+(defn wfg
   "Wrap a function that operates on a Shapelike so that it can operate
   on a Featurelike."
   [feat f & args]
   (feature/update-geometry feat #(apply f (cons % args))))
 
-(defn- wj
+(defn wj
   "Wrap a function that operates on a Geometry so that it can operate
   on a Featurelike"
   [feat f & args]
