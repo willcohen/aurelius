@@ -21,7 +21,9 @@
         org.xerial/sqlite-jdbc {:mvn/version "3.45.2.0"}
         ovid/ovid {:git/url "https://github.com/willcohen/ovid"
                    :git/sha "d57154ab06e0e5052f2575f52a8324d1eb20cc5c"}
-        seancorfield/next.jdbc {:mvn/version "1.2.659"}}
+        seancorfield/next.jdbc {:mvn/version "1.2.659"}
+        org.locationtech.jts.io/jts-io-common {:mvn/version "1.20.0-SNAPSHOT"}
+        org.locationtech.jts/jts-core {:mvn/version "1.20.0-SNAPSHOT"}}
  :aliases
  {:dev {:extra-paths ["dev"]}
   :test {:extra-paths ["test"]
@@ -37,4 +39,11 @@
    :main-opts ["-m" "hf.depstar.jar" "aurelius.jar"]}
   :deploy
   {:extra-deps {deps-deploy/deps-deploy {:mvn/version "0.0.9"}}
-   :main-opts ["-m" "deps-deploy.deps-deploy" "deploy" "aurelius.jar"]}}}
+   :main-opts ["-m" "deps-deploy.deps-deploy" "deploy" "aurelius.jar"]}}
+ :mvn/repos {"jts-snapshots" {:url "https://repo.eclipse.org/content/repositories/jts-snapshots"
+                              :releases {:enabled false}
+                              :snapshots {:enabled true
+                                          :update :always
+                                          :checksum :warn}}
+             "releases" {:url "https://clojars.org/repo"},
+             "snapshots" {:url "https://clojars.org/repo"}}}

@@ -16,6 +16,7 @@
   (:require [clojure.math.numeric-tower :as math]
             [clojure.tools.logging :as log]
             [geo.jts :as geo.jts]
+            [geo.crs :as geo.crs]
             [geo.spatial :as spatial :refer [Shapelike]]
             [ovid.feature :as feature :refer [Featurelike
                                               -to-shape
@@ -30,13 +31,16 @@
             [geo.geohash :as geo.geohash])
   (:import (ch.hsr.geohash GeoHash WGS84Point)
            (com.uber.h3core.util LatLng)
-           (org.locationtech.jts.algorithm MinimumDiameter)
-           (org.locationtech.jts.geom Geometry)
+           (org.locationtech.jts.algorithm MinimumDiameter MinimumAreaRectangle)
+           (org.locationtech.jts.geom Geometry
+                                      GeometryFactory
+                                      PrecisionModel)
            (org.locationtech.jts.geom.prep PreparedGeometry
                                            PreparedGeometryFactory)
            (org.locationtech.jts.operation.buffer
             BufferOp
-            BufferParameters)
+            BufferParameters
+            OffsetCurveBuilder)
            (org.locationtech.jts.operation.union CascadedPolygonUnion)
            (org.locationtech.spatial4j.shape Shape)
            (org.locationtech.spatial4j.shape.impl
@@ -847,13 +851,64 @@
   [feature dist]
   (one-sided-buffer feature (- (math/abs dist))))
 
-(defn- get-minimum-rectangle-jts
+(defn- get-minimum-area-rectangle-jts
+  [^Geometry g]
+  (MinimumAreaRectangle/getMinimumRectangle g))
+
+(defn get-minimum-area-rectangle
+  [feat]
+  (wj feat get-minimum-area-rectangle-jts))
+
+(defn- get-minimum-width-rectangle-jts
   [^Geometry g]
   (MinimumDiameter/getMinimumRectangle g))
 
-(defn get-minimum-rectangle
+(defn get-minimum-width-rectangle
   [feat]
-  (wj feat get-minimum-rectangle-jts))
+  (wj feat get-minimum-width-rectangle-jts))
+
+
+;; Offset either a polygon or a line
+
+(def ^OffsetCurveBuilder ocb
+  (OffsetCurveBuilder. (PrecisionModel.) (BufferParameters.)))
+
+(defn ^"[Lorg.locationtech.jts.geom.Coordinate;" get-offset-curve
+  [l distance]
+  (.getOffsetCurve
+   ocb
+   (.getCoordinates ^Geometry (feature/geometry l)) distance))
+
+(defn offset-line-fn
+  [l distance]
+  (.createLineString ^GeometryFactory (geo.crs/get-geometry-factory l)
+                     (get-offset-curve l distance)))
+
+(defn offset-polygon-fn
+  [l distance]
+  (.createPolygon
+           (geo.crs/get-geometry-factory l)
+           (geo.jts/coordinate-sequence
+            (into
+             []
+             (conj (into [] (concat (.getCoordinates
+                                     ^Geometry (feature/geometry l))
+                                    (reverse (get-offset-curve l distance))))
+                   (first (.getCoordinates
+                           ^Geometry (feature/geometry l))))))))
+
+
+(defn offset-line-string
+  "geom-type can be :polygon or :line.
+  A :line type returns a LineString offset by distance.
+  A :polygon type returns a Polygon made up of the original
+  line connected to the offset LineString in a closed ring."
+  [l distance geom-type]
+  (try (case geom-type
+           :polygon (offset-polygon-fn l distance)
+           :line (offset-line-fn l distance))
+      (catch Exception _ nil)))
+
 
 ;; Return one modified geometry by comparing many features
 
