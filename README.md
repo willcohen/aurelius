@@ -50,6 +50,10 @@ To update the sqlite, from the dev `aurelius.resources` namespace, run these com
 `Featurelike`s from [ovid](https://github.com/willcohen/ovid).
 * Use of `PreparedGeometry` to improve speed of JTS operations.
 
+### aurelius.parcel
+
+* Initial helper functions to assist with parcel-specific analysis
+
 ### aurelius.resources (dev)
 
 * Import of QCEW and Census FIPS definitions into an internal sqlite database.
