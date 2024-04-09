@@ -41,6 +41,7 @@
             BufferOp
             BufferParameters
             OffsetCurveBuilder)
+           (org.locationtech.jts.operation.linemerge LineMerger)
            (org.locationtech.jts.operation.union CascadedPolygonUnion)
            (org.locationtech.spatial4j.shape Shape)
            (org.locationtech.spatial4j.shape.impl
@@ -917,3 +918,10 @@
   (CascadedPolygonUnion/union
    (into [] (map feature/to-jts) features)))
 
+(defn merge-lines
+  "Assumes that the MultiLineStrings are all one segment and that they are all contiguous."
+  [features]
+  (let [lm (LineMerger.)
+        geoms (map #(.getGeometryN ^Geometry (feature/geometry %) 0) features)]
+    (into [] (map #(.add lm ^Geometry %) geoms))
+    (union (.getMergedLineStrings lm))))
